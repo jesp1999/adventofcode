@@ -1,4 +1,7 @@
 import os.path
+import time
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -6,11 +9,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-YEAR = int(os.environ.get('YEAR', 2023))
-DAY = int(os.environ.get('DAY', 1))
+YEAR = int(os.environ.get('YEAR', time.localtime().tm_year))
+DAY = int(os.environ.get('DAY', time.localtime().tm_mday))
 SESSION_COOKIE = str(os.environ.get('SESSION_COOKIE', ''))
 
 cookies = {'session': SESSION_COOKIE}
+while time.localtime().tm_hour != 0:
+    ...
+
+
 input_response = requests.get(
     f'https://adventofcode.com/{YEAR}/day/{DAY}/input', cookies=cookies
 )
@@ -34,20 +41,26 @@ test_cases = [
     "# data = '''" + '\n# '.join(code_content.split("\n")) + r"'''.split('\n')"
     for code_content in code_content_list
 ]
-main_content = r'''...
+main_content = r'''import pyperclip as pc
+
+...
 
 
 def solution(lines: list[str]):
     ret = 0
+    for line in lines:
+        ...
     ...
     return ret
 
 
 ''' + '\n\n'.join(test_cases) + r'''
 
-data = open('input.txt', 'r').read().split('\n')
+# data = open('input.txt', 'r').read().strip().split('\n')
 
-print(solution(data))
+s = solution(data)
+print(s)
+pc.copy(s)
 '''
 
 main_path = f'{dirname}/main{len(code_content_list)}.py'
