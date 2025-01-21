@@ -1,3 +1,7 @@
+# TODO: make a more elegant solution. I was tired and used keyboard shortcuts
+#  and copy paste to make this solution work in trying to solve the problem
+#  in a short enough time to make the leaderboard.
+
 def solution(lines: list[str]):
     ret = 0
     lastret = -1
